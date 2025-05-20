@@ -1,0 +1,208 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Menu.Master.cs" Inherits="WebSites.Site1" %>
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="icon" type="image/png" href="images/LogoGaucho.jpg"/>
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="css/site.css" />
+    <link type="text/css" rel="stylesheet" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="vendor/toastr/toastr.css" />
+    <link rel="stylesheet" href="vendor/sweetalert/sweetalert.min.css" />
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css" />
+    <title>Inicio Gaucho Parrillero</title>
+    
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/site.js"></script>
+    <script src="vendor/toastr/toastr.min.js"></script>
+    <script src="vendor/sweetalert/sweetalert.min.js"></script>
+    <script src="vendor/select2/select2.min.js"></script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+</head>
+
+<body>
+    <nav class="navbar sticky-top navbar-expand navbar-dark main" >
+        <a href="#menu-toggle" id="menu-toggle" class="navbar-brand">
+            <span class="navbar-toggler-icon"></span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"> 
+                    <a href="#" class="navbar-brand">
+                    <img src="images/logo.png" alt="Logo del Sitio" width="170" height="50" />
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav navbar-right">
+                <li class="nav-item dropdown ">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" runat="server"
+                       role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        style="white-space: normal;">
+                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" >
+                        <a visible="false" class="dropdown-item" runat="server" id="config" href="frmConfiguracion"    >
+                            <i class="fa fa-cog" aria-hidden="true"></i>
+                            Configuracion
+                        </a>
+                        <a visible="false" class="dropdown-item" runat="server" id="configSUNAT" href="ConfigSUNAT"    >
+                            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                            SUNAT
+                        </a>
+                        <a class="dropdown-item" runat="server" id="cerrarSesion" href="#" onclick="__doPostBack('cerrarSesion', '');"   >
+                            <i class="fa fa-power-off" aria-hidden="true"></i>
+                            Cerrar Session
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-md-0"> </form>
+        </div>
+    </nav>
+
+    <div id="wrapper" class="toggled ">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <!--
+            <div class="colors">
+                <a class="default" href="javascript:void(0)"></a>
+                <a class="blue" href="javascript:void(0)"></a>
+                <a class="green" href="javascript:void(0)"></a>
+                <a class="red" href="javascript:void(0)"></a>
+                <a class="white" href="javascript:void(0)"></a>
+                <a class="black" href="javascript:void(0)"></a>
+            </div>
+            -->
+            <div id="jquery-accordion-menu" class="jquery-accordion-menu">
+                <div id="local" runat="server" class="jquery-accordion-menu-header d-flex justify-content-center align-items-center"></div>
+                <ul class="MainMenu">
+                    <li>
+                        <a href="Home" runat="server"><i class="fa fa-home"></i>Home</a>
+
+                    </li>
+                    <li>
+                        <a href="#" id="lnkMesas" runat="server"><i class="fa fa-cutlery"></i><label>Pedidos</label> </a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="frmMesas">Mesas</a>
+                            </li>
+                            <li>
+                                <a href="frmPedidoMesas?vchSalon=0&vchNumMesa=0">Para Llevar</a>
+                            </li>
+                            
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" id="lnkCaja" runat="server"><i class="fa fa-money"></i><label>Caja</label> </a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="frmListadoMesasPagar">Pagar</a>
+                            </li>
+                            <li>
+                                <a id="lnkistadoMesasAnular" href="frmListadoMesasAnular" runat="server">Anular Orden</a>
+                            </li>
+                            <li>
+                                <a href="frmListadoPedidosxPagar">Ver Pagados</a>
+                            </li>
+                            <li>
+                                <a href="frmListadoPagadosSUNAT">Estado Comprobantes</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" id="lnkGestion" runat="server"><i class="fa fa-cogs"></i><label>Operaciones</label> </a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="frmListadoCajasAperturadas">Gestión de Caja</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" id="lnkReportes" runat="server"><i class="fa fa-file-text"></i><label>Reportes</label> </a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="frmReporteVentas">Ventas Totales</a>
+                            </li>
+                            <li>
+                                <a href="frmReporteProductosDetallados">Productos Detallados</a>
+                            </li>
+                            <li>
+                                <a href="frmReporteProductosAnulados">Productos Anulados</a>
+                            </li>
+                            <li>
+                                <a href="frmReporteProductosMasVendidos">Productos Mas Vendidos</a>
+                            </li>
+                            <li>
+                                <a href="frmReportePorMesero">Reporte por Mesero</a>
+                            </li>
+                            <li>
+                                <a href="frmReporteCaja">Reporte Caja</a>
+                            </li>
+                            <li>
+                                <a href="frmReporteCajaEgresos">Reporte Egresos</a>
+                            </li>
+                            <li>
+                                <a href="frmReporteConsolidado">Reporte Consolidado</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" id="lnkAdministracion" runat="server"><i class="fa fa-calculator"></i><label>Administración</label> </a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="#">Logística</a>
+                                <ul class="submenu">
+                                    <li><a href="frmIngresoStock">Entrada de Productos</a></li>
+                                    <li><a href="FrmSalidaStock">Salida de Productos </a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" id="lnkMantenimiento" runat="server"><i class="fa fa-wrench"></i><label>Mantenimientos</label> </a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="frmMantProductos">Productos</a>
+                            </li>
+                            <li>
+                                <a id="lnkSubMantSucursal" href="frmMantSucursal" runat="server">Sucursal</a>
+                            </li>
+                            <li>
+                                <a id="lnkSubMantMesas" href="frmMantSalonMesas" runat="server">Mesas</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" id="lnkSeg" runat="server"><i class="fa fa-lock"></i><label>Seguridad</label> </a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="frmAgregarUsuarios">Usuarios</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="jquery-accordion-menu-footer"></div>
+            </div>
+        </div> <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container body-content">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server" >
+            </asp:ContentPlaceHolder>
+            </div>
+        </div> <!-- /#page-content-wrapper -->
+    </div> <!-- /#wrapper -->
+    
+</body>
+    
+</html>

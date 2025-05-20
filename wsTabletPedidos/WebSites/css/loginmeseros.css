@@ -1,0 +1,236 @@
+﻿/* Animación de entrada para el contenedor principal */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Estilo general */
+body {
+    background: #0B6EC1; /* Degradado de azul a morado */
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Contenedor principal */
+#panel_tablet_login_centro {
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+    padding: 20px;
+    width: 100%;
+    max-width: 550px;
+    animation: fadeIn 0.6s ease-in-out;
+    box-sizing: border-box;
+}
+
+/* Imagen del logo */
+#imagen_logo_inicio {
+    display: block; /* Hace que la imagen sea un bloque */
+    margin-left: auto; /* Centra la imagen horizontalmente */
+    margin-right: auto; /* Centra la imagen horizontalmente */
+    width: 50%; /* Ajuste de tamaño */
+    border-radius: 10px;
+    border: 2px solid #D6DBDF;
+    transition: transform 0.3s ease;
+}
+
+#imagen_logo_inicio:hover {
+    transform: scale(1.1);
+}
+
+/* Input de código de usuario */
+#i_codigo_usuario {
+    font-size: 1.5rem;
+    text-align: center;
+    border: 2px solid #BDBDBD;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+#i_codigo_usuario:focus {
+    border-color: #3498DB;
+    box-shadow: 0px 0px 8px rgba(52, 152, 219, 0.5);
+    outline: none;
+}
+
+/* Botones del teclado numérico */
+.btn_numero {
+    font-size: 2rem;
+    font-weight: bold; /* Texto grueso */
+    width: 90px; /* Controla el ancho de los botones */
+    height: 65px; /* Altura consistente */
+    margin: 5px;
+    border-radius: 8px;
+    background-color: #E9ECEF;
+    border: 1px solid #BDBDBD;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.btn_numero:hover {
+    background-color: #D6DBDF;
+    transform: scale(1.05);
+}
+
+.btn_numero:active {
+    transform: scale(0.95);
+    background-color: #BDC3C7;
+}
+
+/* Botones funcionales: Retroceder y Cancelar */
+.btn_operacion {
+    font-size: 1.2rem;
+    background-color: #FF7675;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 10px;
+    width: 200px;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn_backspace {
+    background-color: #F39C12;
+}
+
+.btn_backspace:hover {
+    background-color: #D68910;
+}
+
+.btn_cancelar {
+    background-color: #E74C3C;
+}
+
+.btn_cancelar:hover {
+    background-color: #C0392B;
+}
+
+.btn_operacion:active {
+    transform: scale(0.95);
+}
+
+/* Botón Ingresar */
+#btn_ingresar {
+    background-color: #2ECC71;
+    color: white;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 10px;
+    width: 100%;
+    padding: 15px;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    cursor: pointer;
+}
+
+#btn_ingresar:hover {
+    background-color: #27AE60;
+}
+
+#btn_ingresar:active {
+    transform: scale(0.95);
+}
+
+/* Botón Limpiar */
+#btn_limpiar_logeo {
+    background-color: #F39C12;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.5rem;
+    width: 80px;
+    height: 60px;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    cursor: pointer;
+}
+
+#btn_limpiar_logeo:hover {
+    background-color: #D68910;
+}
+
+#btn_limpiar_logeo:active {
+    transform: scale(0.95);
+}
+
+/* Tabla del teclado */
+table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+td {
+    padding: 10px;
+}
+
+/* Animación de entrada de los botones */
+@keyframes buttonBounce {
+    0% {
+        transform: scale(0.9);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.btn_numero,
+.btn_operacion,
+#btn_ingresar {
+    animation: buttonBounce 0.3s ease;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    #panel_tablet_login_centro {
+        padding: 15px;
+        max-width: 90%;
+    }
+
+    #btn_limpiar_logeo {
+        width: 50px;
+        height: 50px;
+    }
+
+    #i_codigo_usuario {
+        font-size: 1.2rem;
+    }
+
+    #btn_ingresar {
+        font-size: 1.2rem;
+        padding: 10px;
+    }
+
+    .btn_operacion {
+        width: 120px;
+    }
+
+    .btn_numero {
+        width: 70px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+}
+
