@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-//Agregamos las librerias que utilizaremos.
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Runtime.InteropServices;
@@ -329,7 +328,6 @@ namespace CrearTicketVenta
             }
         }
 
-        //Metodos para enviar secuencias de escape a la impresora
         //Para cortar el ticket
         public void CortaTicket()
         {
@@ -346,14 +344,10 @@ namespace CrearTicketVenta
         //Para mandara a imprimir el texto a la impresora que le indiquemos.
         public void ImprimirTicket(string impresora)
         {
-            //Este metodo recibe el nombre de la impresora a la cual se mandara a imprimir y el texto que se imprimira.
-            //Usaremos un código que nos proporciona Microsoft. https://support.microsoft.com/es-es/kb/322091
-
             RawPrinterHelper.SendStringToPrinter(impresora, linea.ToString()); //Imprime texto.
             linea.Clear();//Al cabar de imprimir limpia la linea de todo el texto agregado.
         }
     }
-
 
     //Clase para mandara a imprimir texto plano a la impresora
     public class RawPrinterHelper
@@ -390,10 +384,6 @@ namespace CrearTicketVenta
         [DllImport("winspool.Drv", EntryPoint = "WritePrinter", SetLastError = true, ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
         public static extern bool WritePrinter(IntPtr hPrinter, IntPtr pBytes, Int32 dwCount, out Int32 dwWritten);
 
-        // SendBytesToPrinter()
-        // When the function is given a printer name and an unmanaged array
-        // of bytes, the function sends those bytes to the print queue.
-        // Returns true on success, false on failure.
         public static bool SendBytesToPrinter(string szPrinterName, IntPtr pBytes, Int32 dwCount)
         {
             Int32 dwError = 0, dwWritten = 0;

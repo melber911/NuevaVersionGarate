@@ -39,7 +39,7 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item"> 
                     <a href="#" class="navbar-brand">
-                    <img src="images/logo.png" alt="Logo del Sitio" width="170" height="50" />
+                    <img src="images/logo.png" alt="Logo del Sitio" width="200" height="60" />
                     </a>
                 </li>
             </ul>

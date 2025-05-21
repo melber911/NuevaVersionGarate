@@ -12,12 +12,6 @@ using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Web.UI;
-//using Entidades;
-
-//using System.Text.RegularExpressions;
-//using System.Diagnostics;
-//using System.Reflection;
-
 
 public partial class frmGenComprobPago : System.Web.UI.Page
 {
@@ -32,7 +26,6 @@ public partial class frmGenComprobPago : System.Web.UI.Page
     String gstrRutaXML = "";
     String gstrRutaPDF = "";
     String gstrTicket = "";
-
 
     #region [ variables ]
 
@@ -1167,8 +1160,6 @@ public partial class frmGenComprobPago : System.Web.UI.Page
         {
             txtMontoaPagar.Value = "0.00";
             txtMontoaPagar.Disabled = true;
-            //txtMontoaPagar.Font.Bold = true;
-            //txtMontoaPagar.ForeColor = Color.Red;
             return;
         }
 
@@ -1181,10 +1172,6 @@ public partial class frmGenComprobPago : System.Web.UI.Page
         {
             txtMontoaPagar.Value = montoAcum.ToString("n2");
             txtMontoaPagar.Disabled = true;
-            //txtMontoaPagar.Font.Bold = true;
-            //txtMontoaPagar.ForeColor = Color.Red;
-            //imgCocina.Visible = true;
-            //btnEnviarCocina.Visible = true;
         }
     }
     void armarTablaPedidos()
@@ -1206,26 +1193,16 @@ public partial class frmGenComprobPago : System.Web.UI.Page
     void armarTablaPedidos(Int32 pintordenID)
     {
         clsProducto lobjProducto = new clsProducto();
-        //DataTable dt = new DataTable();
 
         DataTable dt = lobjProducto.obtenerDetalleOrden(pintordenID);
         if (dt.Rows.Count > 0)
         {
-            // Accede al valor de la primera fila en la columna "ordenCantidadPersonas"
             object valor = dt.Rows[0]["ordenCantidadPersonas"];
 
-            // Convierte el valor a entero (u otro tipo según lo necesites)
             int cantidadPersonas = Convert.ToInt32(valor);
 
             Session["cantidadPersonas"] = cantidadPersonas;
         }
-        //dt.Columns.Add("vchNumSecu");
-        //dt.Columns.Add("intCantidad");
-        //dt.Columns.Add("vchCodigo");
-        //dt.Columns.Add("vchDeItem");
-        //dt.Columns.Add("numPrecioUni");
-        //dt.Columns.Add("numPrecioTot");
-        //dt.Columns.Add("vchComentario");
 
         Session["dtPedido"] = dt;
 
@@ -1354,8 +1331,6 @@ public partial class frmGenComprobPago : System.Web.UI.Page
         if (!IsPostBack)
         {
             cargarDataEmisor();            
-            //armarTablaPedidos();
-            //cargarDataEmisor();
             armarTablaPedidos();
             armarTablaPedidos(Convert.ToInt32(Request.QueryString["vchOrdenID"].ToString()));
             
@@ -1380,17 +1355,6 @@ public partial class frmGenComprobPago : System.Web.UI.Page
             {
                 btnPagar.Visible = false;
                 btnDivirCuenta.Visible = false;
-                //if (!Session["Perfil"].ToString().Equals("Administrators"))
-                //{
-                //    imgAnular.Visible = false;
-                //    btnAnular.Visible = false;
-                //}
-                //else {
-                //    if (ddlComprob.SelectedValue.Equals("FAC")) {
-                //        imgAnular.Visible = true;
-                //        btnAnular.Visible = true;
-                //    }
-                //}
 
                 if (ddlComprob.SelectedValue.ToString().Equals("BOL"))
                 {
@@ -1432,8 +1396,6 @@ public partial class frmGenComprobPago : System.Web.UI.Page
 
     protected void ddlComprob_SelectedIndexChanged(object sender, EventArgs e)
     {
-        //imgCaptcha.ImageUrl = "http://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/captcha?accion=image";
-        //lblMsgError.Text = "";
         if (ddlComprob.SelectedValue.Equals("FAC"))
         {
             lblRuc.InnerText = "RUC:";
@@ -1470,10 +1432,8 @@ public partial class frmGenComprobPago : System.Web.UI.Page
         Double ldblMontoEfectivo = 0.0;
         List<string> metodosSeleccionados = new List<string>();
 
-        // Lista para almacenar los detalles de los métodos y sus montos
         List<string> detallesMetodos = new List<string>();
 
-        // Configuración de los métodos de pago
         var metodos = new[]
         {
         new { CheckBox = chkEfectivo, Monto = txtmontoEfectivo, Nombre = "efectivo" },
@@ -1483,18 +1443,14 @@ public partial class frmGenComprobPago : System.Web.UI.Page
 
         foreach (var metodo in metodos)
         {
-            // Verificar si el checkbox está seleccionado
             if (metodo.CheckBox.Checked)
             {
                 metodosSeleccionados.Add(metodo.Nombre);
-
-                // Tomar el valor del monto, o 0 si está vacío
                 decimal monto = string.IsNullOrEmpty(metodo.Monto.Value) ? 0 : Convert.ToDecimal(metodo.Monto.Value);
                 detallesMetodos.Add($"{metodo.Nombre}:{monto}");
             }
             else
             {
-                // Agregar el método con monto 0 si no está seleccionado
                 detallesMetodos.Add($"{metodo.Nombre}:0");
             }
         }
@@ -1502,42 +1458,10 @@ public partial class frmGenComprobPago : System.Web.UI.Page
         // Combinar los valores seleccionados con "+" y los detalles con "|"
         string resultadoSeleccionados = string.Join("+", metodosSeleccionados);
         string resultadoDetalles = string.Join("|", detallesMetodos);
-        //if (ddlComprob.SelectedValue.ToString().Equals("FAC"))
-        //{
-        //    if (txtRuc.Value.Trim().Equals(""))
-        //    {
-        //        ScriptManager.RegisterStartupScript(this, this.GetType(), "script", "alert('Ingrese el RUC!');", true);
-        //        return;
-        //    }
-        //}
-
-        //if (ddlComprob.SelectedValue.ToString().Equals("BOL"))
-        //{
-        //    if (txtNombre.Value.Trim().Equals(""))
-        //    {
-        //        ScriptManager.RegisterStartupScript(this, this.GetType(), "script", "alert('Ingrese el nombre del Cliente!');", true);
-        //        return;
-        //    }
-        //}
-        //else
-        //{
-        //    if (txtNombre.Value.Trim().Equals(""))
-        //    {
-        //        ScriptManager.RegisterStartupScript(this, this.GetType(), "script", "alert('Ingrese la Razon Social!');", true);
-        //        return;
-        //    }
-
-        //    if (txtDireccion.Value.Trim().Equals(""))
-        //    {
-        //        ScriptManager.RegisterStartupScript(this, this.GetType(), "script", "alert('Ingrese la dirección!');", true);
-        //        return;
-        //    }
-        //}
         try
         {
             ldblMontoPagar = Convert.ToDouble(txtMontoaPagar.Value);
             ldblMontoEfectivo = Convert.ToDouble(txtEfectivo.Value.Trim());
-            //txtVuelto.Text = (ldblMontoPagar - ldblMontoEfectivo).ToString();
         }
         catch (Exception ex)
         {
@@ -1558,8 +1482,7 @@ public partial class frmGenComprobPago : System.Web.UI.Page
             lstrFlagDeclara = "N";
 
         dtResponseSerie = lobjProducto.obtenerSerieDocumento(lstrFlagDeclara, ddlComprob.SelectedValue.ToString(), (int)Session["Idsucursal"]);
-
-        
+ 
         gNumDocuGenerado = dtResponseSerie.Rows[0]["vchTipDocumento"].ToString();
         hpLog.generarLog("Se genera la serie: gNumDocuGenerado: " + gNumDocuGenerado);
         var dtVal = lobjProducto.validarOrdenesXcomprobante(Convert.ToInt32(Request.QueryString["vchOrdenID"].ToString()));
@@ -1570,7 +1493,6 @@ public partial class frmGenComprobPago : System.Web.UI.Page
         }
         if (chkEnviar.Checked)
         {
-            //imprimirComprobante(dtResponse,"N");
             if (ddlComprob.SelectedValue == "FAC")
             {
                 oTipoComprobante = 1;
@@ -1587,7 +1509,6 @@ public partial class frmGenComprobPago : System.Web.UI.Page
 
             if (validarDatosSunat())
             {
-
                 dtResponse = lobjProducto.generarComprobantePago(gNumDocuGenerado,
                                                              ddlComprob.SelectedValue.ToString(),
                                                              lstrFlagDeclara,
@@ -1604,35 +1525,24 @@ public partial class frmGenComprobPago : System.Web.UI.Page
 
                 ldtResponseActualizarSerie = lobjProducto.grabarRespuestaSUNAT(gNumDocuGenerado, gintCodRespuestaSunat, gstrDigestValue, gstrEstado, gvchMensajeRespuesta, gstrRutaCDR, gstrRutaPDF, gstrRutaXML, gstrTicket);
 
-
-                //PdfDocument lobjPdfDocument = new PdfDocument();
-                //lobjPdfDocument.LoadFromFile(gstrRutaPDF);
-                //lobjPdfDocument.PrintSettings.PrinterName = "CajaPri";
-                //lobjPdfDocument.Print();
                 ifrpdf.Src = $"pdfWeb?ruta={gstrRutaPDF}";
-                //imprimirComprobante(dtResponse, "S");
                 string correo = txtCorreo.Value.Trim();
                 EnviarDocumentosPorMail(correo);
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "script",
-                    "$('#pdfModal').modal('show');" ,
-                    true);
-                //Response.Redirect("frmListadoMesasPagar");
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "script", "$('#pdfModal').modal('show');" , true);
             }
             else
             {
-
                 if (!gstrEstado.Equals("Error") && gintCodRespuestaSunat != 100)
                 {
                     dtResponseActualiza = lobjProducto.actualizaSerieDocumento(ddlComprob.SelectedValue.ToString());
                 }
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "script", "toastr.error('" + gstrEstado + " - " + gvchMensajeRespuesta + "','Generar comprobante');", true);
-                //lblMsgError.Text = gstrEstado + " - " + gvchMensajeRespuesta;
                 return;
             }
         }
         else
         {
-
             dtResponse = lobjProducto.generarComprobantePago(gNumDocuGenerado,
                                                              ddlComprob.SelectedValue.ToString(),
                                                              lstrFlagDeclara,
@@ -1646,7 +1556,6 @@ public partial class frmGenComprobPago : System.Web.UI.Page
                                                              txtDireccion.Value.Trim().ToUpper(),
                                                              resultadoDetalles,
                                                              ddlTipoVuelto.SelectedValue);
-
             Response.Redirect("frmListadoMesasPagar");
         }
 
@@ -1678,10 +1587,6 @@ public partial class frmGenComprobPago : System.Web.UI.Page
         ticket.TextoCentro("Tlf. (053) 328145");
         ticket.TextoCentro(dtResponse.Rows[0]["comprobanteTipDocu"].ToString());
         ticket.TextoCentro(dtResponse.Rows[0]["comprobanteNumDocu"].ToString());
-
-        //ticket.TextoIzquierda("EMAIL: cmcmarce14@gmail.com");//Es el mio por si me quieren contactar ...
-        //ticket.TextoIzquierda("");
-        //ticket.TextoExtremos("Caja #1", dtResponse.Rows[0]["comprobanteTipDocu"] + " #" + dtResponse.Rows[0]["comprobanteNumDocu"]);
         ticket.lineasAsteriscos();
 
         //Sub cabecera.
@@ -1705,12 +1610,7 @@ public partial class frmGenComprobPago : System.Web.UI.Page
         //Articulos a vender.
         ticket.EncabezadoVenta();//NOMBRE DEL ARTICULO, CANT, PRECIO, IMPORTE
         ticket.lineasAsteriscos();
-        //Si tiene una DataGridView donde estan sus articulos a vender pueden usar esta manera para agregarlos al ticket.
-        //foreach (DataGridViewRow fila in dgvLista.Rows)//dgvLista es el nombre del datagridview
-        //{
-        //ticket.AgregaArticulo(fila.Cells[2].Value.ToString(), int.Parse(fila.Cells[5].Value.ToString()),
-        //decimal.Parse(fila.Cells[4].Value.ToString()), decimal.Parse(fila.Cells[6].Value.ToString()));
-        //}
+
         for (int i = 0; i <= dt.Rows.Count - 1; i++)
         {
             decMontoTotal = decMontoTotal + Convert.ToDecimal(dt.Rows[i]["numPrecioTot"].ToString());

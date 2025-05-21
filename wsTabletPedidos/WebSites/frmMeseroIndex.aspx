@@ -40,7 +40,7 @@
         }
 
         #imagen-logo-inicio {
-            width: 150px; /* Aumenté el tamaño del logo */
+            width: 250px; /* Aumenté el tamaño del logo */
             height: 110px; /* Aumenté el tamaño del logo */
             /*border-radius: 50%;*/
             /*border: 2px solid silver;*/

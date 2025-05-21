@@ -44,8 +44,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aspose.Pdf">
-      <HintPath>..\Bin\Aspose.Pdf.dll</HintPath>
+    <Reference Include="Aspose.Pdf, Version=18.6.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Aspose.Pdf.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -153,7 +154,6 @@
     <Content Include="images\efectivo.png" />
     <Content Include="images\eliminar.jpg" />
     <Content Include="images\excelDescarga.png" />
-    <Content Include="images\gaucho.jpg" />
     <Content Include="images\guardar.png" />
     <Content Include="images\Plin.png" />
     <Content Include="images\visa.png" />
