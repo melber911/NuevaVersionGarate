@@ -694,7 +694,7 @@ public partial class frmPedidoDetalle : System.Web.UI.Page
 
         PrintDocument pd = new PrintDocument();
         pd.PrintPage += new PrintPageEventHandler(printDoc_PrintPage);
-        pd.PrinterSettings.PrinterName = "COMPIZZ";//pd.PrinterSettings.PrinterName = "COMACOC";
+        pd.PrinterSettings.PrinterName = "COCINA";//pd.PrinterSettings.PrinterName = "COMACOC"; mvo-"COMPIZZ"
         pd.Print();
     }
     void printDoc_PrintPage(object sender, PrintPageEventArgs e)

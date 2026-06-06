@@ -13,24 +13,29 @@ namespace WebSites.Utils
         {
             string script = @"
             function getCookie(name) {
-                const value = `; ${document.cookie}`;
-                const parts = value.split(`; ${name}=`);
-                return parts.length === 2 ? parts.pop().split(';').shift() : null;
-            }
-    
-            const privileges = getCookie('privileges');
-    
-            swal({
-                title: 'Aviso',
-                text: 'La sesión ha expirado, redirigiendo...',
-                timer: 3000,
-                showConfirmButton: false
-            },function() {
-                if (privileges=='Mesero' || privileges=='Cajero') {
-                    window.location.href = 'frmMeseroIndex';
-                } else {
-                    window.location.href = 'index';
+	            const value = `; ${document.cookie}`;
+	            const parts = value.split(`; ${name}=`);
+	            return parts.length === 2 ? parts.pop().split(';').shift() : null;
                 }
+
+                const privileges = getCookie('privileges');
+                const sucursal = getCookie('sucursal');
+
+                swal({
+	                title: 'Aviso',
+	                text: 'La sesión ha expirado, redirigiendo...',
+	                timer: 3000,
+	                showConfirmButton: false
+                }, function () {
+	                if (privileges === 'Mesero' || privileges === 'Cajero') {
+		                if (sucursal?.toLowerCase().trim() === 'polleria benjamin') {
+			                window.location.href = 'frmMeseroIndex2';
+		                } else {
+			                window.location.href = 'frmMeseroIndex';
+		                }
+	                } else {
+		                window.location.href = 'index';
+	                }
             });";
             page.Page.ClientScript.RegisterStartupScript(tipo.GetType(), "script", script, true);
             ScriptManager.RegisterStartupScript(page, tipo.GetType(), "script", script, true);

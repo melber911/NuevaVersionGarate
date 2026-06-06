@@ -164,7 +164,6 @@
             document.getElementById("<%=EventSubCategoria.ClientID%>").click();
         };
         function EnviarCocina() {
-            debugger;
             document.getElementById("<%=Enviar.ClientID%>").click();
         }
         function AgregarEvento() {

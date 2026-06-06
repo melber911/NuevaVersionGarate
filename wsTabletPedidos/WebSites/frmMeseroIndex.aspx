@@ -199,7 +199,7 @@
 <body>
     <form id="form1" runat="server" class="login-container">
         <div class="logo-section">
-            <img id="imagen-logo-inicio" src="images/logoMesas.png" alt="Logo">
+            <img id="imagen-logo-inicio" src="images/logos/logoventas/logobenjaminmardemajes.png" alt="Logo">
         </div>
         <div class="input-section">
             <asp:TextBox ID="txtCodigo" runat="server" MaxLength="4" AutoPostBack="True" OnTextChanged="txtCodigo_TextChanged" placeholder="Ingresa código" class="input-codigo" oninput="enmascarar()"></asp:TextBox>

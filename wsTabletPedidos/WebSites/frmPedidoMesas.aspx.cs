@@ -530,19 +530,6 @@ namespace WebSites
 
             Session["OrdenIDTemp"] = dtResponseCab.Rows[0]["OrdenID"].ToString();
 
-            //for (int i = 0; i <= dt.Rows.Count - 1; i++)
-            //{
-            //    string CodProd = dt.Rows[i]["vchCodigo"].ToString();
-            //    int cantidad = int.Parse(dt.Rows[i]["intCantidad"].ToString());
-            //    dtStockProd = lobjProducto.getStockByProducto(CodProd);
-            //    if (int.Parse(dtStockProd.Rows[0].ItemArray[0].ToString()) < cantidad)
-            //    {
-            //        string javaScript = "NoHayStock();";
-            //        ScriptManager.RegisterStartupScript(this, this.GetType(), "script", javaScript, true);
-            //        return;
-            //    }
-            //}
-
             for (int i = 0; i <= dt.Rows.Count - 1; i++)
             {
                 dsResponseDet = lobjProducto.generarOrdenDet(Convert.ToInt32(dtResponseCab.Rows[0]["OrdenID"].ToString()),
@@ -588,7 +575,7 @@ namespace WebSites
         {
             PrintDocument pd = new PrintDocument();
             pd.PrintPage += new PrintPageEventHandler(printDoc_PrintPage);
-            pd.PrinterSettings.PrinterName = "COMPIZZ";//pd.PrinterSettings.PrinterName = "COMPIZZ";//pd.PrinterSettings.PrinterName = "COMACOC";
+            pd.PrinterSettings.PrinterName = "COCINA";//pd.PrinterSettings.PrinterName = "COMPIZZ";//pd.PrinterSettings.PrinterName = "COMACOC";
             pd.Print();
         }
 
@@ -753,7 +740,7 @@ namespace WebSites
 
             PrintDocument pd = new PrintDocument();
             pd.PrintPage += new PrintPageEventHandler(printDoc_PrintPage_3);
-            pd.PrinterSettings.PrinterName = "COMPIZZ";//pd.PrinterSettings.PrinterName = "COMPIZZ";//pd.PrinterSettings.PrinterName = "COMACOC";
+            pd.PrinterSettings.PrinterName = "COCINA";//pd.PrinterSettings.PrinterName = "COMPIZZ";//pd.PrinterSettings.PrinterName = "COMACOC";
             pd.Print();
         }
 
@@ -762,7 +749,7 @@ namespace WebSites
 
             PrintDocument pd = new PrintDocument();
             pd.PrintPage += new PrintPageEventHandler(printDoc_PrintPage_4);
-            pd.PrinterSettings.PrinterName = "COMPIZZ";
+            pd.PrinterSettings.PrinterName = "COCINA";
             pd.Print();
         }
 

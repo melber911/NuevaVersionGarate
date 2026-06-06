@@ -155,13 +155,16 @@
     <Content Include="images\eliminar.jpg" />
     <Content Include="images\excelDescarga.png" />
     <Content Include="images\guardar.png" />
+    <Content Include="images\logos\loginsistema\LogoSistema.jpg" />
+    <Content Include="images\logos\logohome\logobenjamin.jpg" />
+    <Content Include="images\logos\logohome\logomardemajes.png" />
+    <Content Include="images\logos\logoventas\logobenjamin.jpg" />
+    <Content Include="images\logos\logoventas\logobenjaminmardemajes.png" />
+    <Content Include="images\logos\logoventas\logomardemajes.png" />
     <Content Include="images\Plin.png" />
     <Content Include="images\visa.png" />
     <Content Include="images\yape.png" />
     <Content Include="images\icons\favicon.ico" />
-    <Content Include="images\logo.png" />
-    <Content Include="images\LogoGaucho.jpg" />
-    <Content Include="images\logoMesas.png" />
     <Content Include="images\mas.jpg" />
     <Content Include="images\menos.png" />
     <Content Include="images\pre-cuenta.jpg" />
@@ -182,6 +185,7 @@
     <Content Include="js\Site.js" />
     <Content Include="js\solid.js" />
     <Content Include="frmMantSalonMesas.aspx" />
+    <Content Include="Logout.aspx" />
     <Content Include="OtrosIngresos.aspx" />
     <Content Include="pdfWeb.aspx" />
     <Content Include="TicketPreCuenta.aspx" />
@@ -337,6 +341,13 @@
     </Compile>
     <Compile Include="frmMantSalonMesas.aspx.designer.cs">
       <DependentUpon>frmMantSalonMesas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Logout.aspx.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Logout.aspx.designer.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
     </Compile>
     <Compile Include="Menu.Master.cs">
       <DependentUpon>Menu.Master</DependentUpon>
@@ -605,6 +616,9 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

@@ -9,9 +9,24 @@ namespace WebSites
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack) {
+            // Evitar que el navegador cachee la página
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetNoStore();
+            Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
+            Response.Cache.SetValidUntilExpires(false);
+
+            if (!IsPostBack)
+            {
                 try
                 {
+                    // Redirigir si ya hay sesión activa
+                    if (Session["Usuario"] != null)
+                    {
+                        Response.Redirect("frmMainMenu_2");
+                        return;
+                    }
+
+                    // Autologin por QueryString
                     if (!string.IsNullOrEmpty(Request.QueryString["vchUsuario"]))
                     {
                         Session["Usuario"] = Request.QueryString["vchUsuario"].ToString();
@@ -31,6 +46,7 @@ namespace WebSites
                 }
             }
         }
+
 
         protected void txtCodigo_TextChanged(object sender, EventArgs e)
         {

@@ -100,7 +100,6 @@
                 </div>
             </div>
 
-
         </div>
         <div class="row">
             <div class="col-6">
@@ -180,7 +179,6 @@
                 </asp:UpdatePanel>
             </div>
         </div>
-
 
         <!-- Modales -->
         <div id="modalNuevoIngreso" class="modal fade" tabindex="-1" role="dialog">
@@ -274,8 +272,5 @@
                 </div>
             </div>
         </div>
-
-
     </form>
-
 </asp:Content>

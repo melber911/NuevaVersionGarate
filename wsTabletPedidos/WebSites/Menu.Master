@@ -2,7 +2,6 @@
 
 <!DOCTYPE html>
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -39,7 +38,8 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item"> 
                     <a href="#" class="navbar-brand">
-                    <img src="images/logo.png" alt="Logo del Sitio" width="200" height="60" />
+                    <!--<img src="images/logos/logohome/logomardemajes.png" alt="Logo del Sitio" width="200" height="60" />-->
+                        <asp:Image ID="imgLogoEmpresa" runat="server" Width="200" Height="60" AlternateText="Logo del Sitio" />
                     </a>
                 </li>
             </ul>

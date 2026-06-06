@@ -63,7 +63,7 @@
                                 Iniciar Sesión
                             </div>
                             <p class="text-center font-weight-bold h1 mb-5">
-                                <asp:Image CssClass="rounded-circle" ID="imgLogo" runat="server" ImageUrl="~/images/LogoGaucho.jpg" Width="80px" Height="80px" />MVARest
+                                <asp:Image CssClass="rounded-circle" ID="imgLogo" runat="server" ImageUrl="~/images/logos/loginsistema/LogoSistema.jpg" Width="80px" Height="80px" />MVARest
                             </p>
 
                             <div class="wrap-input100 validate-input" data-validate="Seleccionar sucursal">

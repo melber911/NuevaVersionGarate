@@ -114,7 +114,8 @@ public partial class frmGenComprobPago : System.Web.UI.Page
     private void mcp_generar_factura()
     {
         clsProducto lobjProducto = new clsProducto();
-        DataTable ldtResponse;
+        double dblIGV = Convert.ToDouble(ConfigurationManager.AppSettings["IGV"],
+                                      System.Globalization.CultureInfo.InvariantCulture);
         string[] valores = gNumDocuGenerado.Split('-');
         Double dblMontoTotalsinIGV = 0.0;
         Double dblMontoTotalIGV = 0.0;
@@ -126,8 +127,8 @@ public partial class frmGenComprobPago : System.Web.UI.Page
         String lstrRutaPDF = "";
         String lstrTicket = "";
 
-        dblMontoTotalsinIGV = Math.Round(Convert.ToDouble(txtMontoaPagar.Value) / (1+(Convert.ToInt16(ConfigurationManager.AppSettings["IGV"]) / 100.00)), 2);
-        dblMontoTotalIGV = Math.Round(Convert.ToDouble(txtMontoaPagar.Value) - (Convert.ToDouble(txtMontoaPagar.Value) / (1 + (Convert.ToInt16(ConfigurationManager.AppSettings["IGV"]) / 100.00))), 2);
+        dblMontoTotalsinIGV = Math.Round(Convert.ToDouble(txtMontoaPagar.Value) / (1 + (dblIGV / 100.0)), 2);
+        dblMontoTotalIGV = Math.Round(Convert.ToDouble(txtMontoaPagar.Value) - (Convert.ToDouble(txtMontoaPagar.Value) / (1 + (dblIGV / 100.0))), 2);
         dblMontoTotalconIGV = Math.Round(Convert.ToDouble(txtMontoaPagar.Value), 2);
 
         try
@@ -155,8 +156,8 @@ public partial class frmGenComprobPago : System.Web.UI.Page
             oCabecera.Direccion_Receptor = txtDireccion.Value.Trim().ToUpper();// "AV. EL DERBY NRO. 254 INT. 2305 URB. EL DERBY LIMA - LIMA - SANTIAGO DE SURCO";
 
             oCabecera.Codigo_Documento = Constantes.FACTURA;
-            oCabecera.Serie_Documento = valores[0];//"F001";
-            oCabecera.Numero_Documento = valores[1];// "00000001";
+            oCabecera.Serie_Documento = valores[0];
+            oCabecera.Numero_Documento = valores[1];
             oCabecera.Fecha_Emision = DateTime.Now;
             oCabecera.Hora_Emision = DateTime.Now.ToString("hh:mm:ss");
             oCabecera.Fecha_Vencimiento = DateTime.Now;
@@ -170,32 +171,27 @@ public partial class frmGenComprobPago : System.Web.UI.Page
             oCabecera.Importe_Detraccion = 0;
             oCabecera.NroCuenta_Detraccion = "";
 
-            oCabecera.Importe_Gravado = Convert.ToDecimal(dblMontoTotalsinIGV);//Convert.ToDecimal("100.00");
+            oCabecera.Importe_Gravado = Convert.ToDecimal(dblMontoTotalsinIGV);
             oCabecera.Importe_Exonerado = Convert.ToDecimal("0.00");
             oCabecera.Importe_Inafecto = Convert.ToDecimal("0.00");
             oCabecera.Importe_Gratuito = Convert.ToDecimal("0.00");
-            oCabecera.Importe_SubTotal = Convert.ToDecimal(dblMontoTotalsinIGV);//Convert.ToDecimal("100.00");
-            oCabecera.Importe_ValorVenta = Convert.ToDecimal(dblMontoTotalsinIGV); //Convert.ToDecimal("100.00");
+            oCabecera.Importe_SubTotal = Convert.ToDecimal(dblMontoTotalsinIGV);
+            oCabecera.Importe_ValorVenta = Convert.ToDecimal(dblMontoTotalsinIGV);
             oCabecera.Importe_Descuento = Convert.ToDecimal("0.00");
-            oCabecera.Importe_IGV = Convert.ToDecimal(dblMontoTotalIGV); //Convert.ToDecimal("18.00");
+            oCabecera.Importe_IGV = Convert.ToDecimal(dblMontoTotalIGV);
             oCabecera.Importe_ISC = Convert.ToDecimal("0.00");
-            oCabecera.Importe_Total = Convert.ToDecimal(dblMontoTotalconIGV); //Convert.ToDecimal("180.00");
-            oCabecera.Importe_Cobrado = Convert.ToDecimal(dblMontoTotalconIGV); //Convert.ToDecimal("180.00");
+            oCabecera.Importe_Total = Convert.ToDecimal(dblMontoTotalconIGV);
+            oCabecera.Importe_Cobrado = Convert.ToDecimal(dblMontoTotalconIGV);
             oCabecera.Importe_OtrosCargos = Convert.ToDecimal("0.00");
             oCabecera.Importe_OtrosTributos = Convert.ToDecimal("0.00");
-
             oCabecera.Importe_Percepcion = Convert.ToDecimal("0.00");
             oCabecera.Codigo_Percepcion = "";
             oCabecera.Porcentaje_Percepcion = Convert.ToDecimal("0.00");
             oCabecera.Base_Percepcion = Convert.ToDecimal("0.00");
-
-            oCabecera.PorcentajeIGV = 100m * (Convert.ToDecimal(ConfigurationManager.AppSettings["IGV"]) / 100m);
+            oCabecera.PorcentajeIGV = Convert.ToDecimal(dblIGV);
             oCabecera.Importe_Base_ISC = Convert.ToDecimal("0.00");
             oCabecera.Importe_Base_OtrosTributos = Convert.ToDecimal("0.00");
-
-
-
-            oCabecera.Texto_Importe_Total = NumberToText.Convertir_Valor(Convert.ToDecimal(dblMontoTotalconIGV)).ToUpper(); //"CIENTO DIECIOCHO CON (00/100) SOLES";
+            oCabecera.Texto_Importe_Total = NumberToText.Convertir_Valor(Convert.ToDecimal(dblMontoTotalconIGV)).ToUpper();
 
             #endregion
 
@@ -215,24 +211,24 @@ public partial class frmGenComprobPago : System.Web.UI.Page
 
                 dblCantidad = Math.Round(Convert.ToDouble(gdPedido.Rows[i].Cells[1].Text), 2);
                 dblPrecioUni = Math.Round(Convert.ToDouble(gdPedido.Rows[i].Cells[3].Text) / Convert.ToDouble(gdPedido.Rows[i].Cells[1].Text), 2);
-                dblPrecioUniSinIGV = Math.Round(dblPrecioUni / (1 + (Convert.ToInt16(ConfigurationManager.AppSettings["IGV"]) / 100.00)), 2);
+                dblPrecioUniSinIGV = Math.Round(dblPrecioUni / (1 + (dblIGV / 100.0)), 2);
                 dblPrecioTotal = Math.Round(Convert.ToDouble(gdPedido.Rows[i].Cells[3].Text), 2);
-                dblPrecioTotalSinIGV = Math.Round(dblPrecioTotal / (1 + (Convert.ToInt16(ConfigurationManager.AppSettings["IGV"]) / 100.00)), 2);
+                dblPrecioTotalSinIGV = Math.Round(dblPrecioTotal / (1 + (dblIGV / 100.0)), 2);
                 dblMontoIGV = Math.Round(dblPrecioTotal - dblPrecioTotalSinIGV, 2);
 
-                oDetalle.NroItem = (i + 1).ToString(); //"1";
+                oDetalle.NroItem = (i + 1).ToString();
                 oDetalle.Codigo_Articulo = gdPedido.DataKeys[i].Values[0].ToString();
                 oDetalle.Codigo_Unidad = "C62";
                 oDetalle.Descripcion_Articulo = gdPedido.Rows[i].Cells[2].Text.ToUpper();
                 oDetalle.Cantidad = Convert.ToDecimal(gdPedido.Rows[i].Cells[1].Text);
-                oDetalle.Precio_Unitario_SinIGV = Convert.ToDecimal(dblPrecioUniSinIGV); // Convert.ToDecimal("100.00");
-                oDetalle.Precio_Unitario_ConIGV = Convert.ToDecimal(dblPrecioUni); // Convert.ToDecimal("118.00");
-                oDetalle.Importe_SubTotal = Convert.ToDecimal(dblPrecioTotalSinIGV); //Convert.ToDecimal("100.00");
+                oDetalle.Precio_Unitario_SinIGV = Convert.ToDecimal(dblPrecioUniSinIGV);
+                oDetalle.Precio_Unitario_ConIGV = Convert.ToDecimal(dblPrecioUni);
+                oDetalle.Importe_SubTotal = Convert.ToDecimal(dblPrecioTotalSinIGV);
                 oDetalle.Importe_Descuento = Convert.ToDecimal("0.00");
-                oDetalle.Importe_ValorVenta = Convert.ToDecimal(dblPrecioTotalSinIGV); //Convert.ToDecimal("100.00");
-                oDetalle.Importe_IGV = Convert.ToDecimal(dblMontoIGV);// Convert.ToDecimal("18.00");
+                oDetalle.Importe_ValorVenta = Convert.ToDecimal(dblPrecioTotalSinIGV);
+                oDetalle.Importe_IGV = Convert.ToDecimal(dblMontoIGV);
                 oDetalle.Importe_ISC = Convert.ToDecimal("0.00");
-                oDetalle.Importe_Total = Convert.ToDecimal(dblPrecioTotal);// Convert.ToDecimal("118.00");
+                oDetalle.Importe_Total = Convert.ToDecimal(dblPrecioTotal);
 
                 oDetalle.EsGravado = true;
                 oDetalle.EsExonerado = false;
@@ -280,19 +276,6 @@ public partial class frmGenComprobPago : System.Web.UI.Page
             oFormaPago.Monto_Neto = Convert.ToDecimal(dblMontoTotalconIGV);
             oLstFormaPago.Add(oFormaPago);
 
-            //oFormaPago = new FacturaFormaPago();
-            //oFormaPago.Forma_Pago = "Cuota001"; //En caso sea -> Credito
-            //oFormaPago.Codigo_Moneda = "PEN";
-            //oFormaPago.Monto_Neto = Convert.ToDecimal("59.00");
-            //oFormaPago.Fecha_Pago = DateTime.Now.AddMonths(1);
-            //oLstFormaPago.Add(oFormaPago);
-
-            //oFormaPago = new FacturaFormaPago();
-            //oFormaPago.Forma_Pago = "Cuota002"; //En caso sea -> Credito
-            //oFormaPago.Codigo_Moneda = "PEN";
-            //oFormaPago.Monto_Neto = Convert.ToDecimal("59.00");
-            //oFormaPago.Fecha_Pago = DateTime.Now.AddMonths(2);
-            //oLstFormaPago.Add(oFormaPago);
 
             #endregion
             //-- AGREGAMOS LA LISTA DE ITEMS
@@ -372,14 +355,6 @@ public partial class frmGenComprobPago : System.Web.UI.Page
             }
             gstrRutaPDF = lstrRutaPDF;
             hpLog.generarLog("FINALIZA CONSULTA SERVICIO SUNAT");
-            //PdfViewer viewer = new PdfViewer();
-            //Open input PDF file
-            //viewer.BindPdf(oRESPUESTA.RutaPDF);
-            //Print PDF document
-            //viewer.PrintDocument();
-            //Close PDF file
-            //viewer.Close();
-
         }
         catch (Exception ex)
         {
@@ -392,9 +367,9 @@ public partial class frmGenComprobPago : System.Web.UI.Page
 
     private void mcp_generar_boleta_venta()
     {
-        //PrintDocument lobjPrinter;
         clsProducto lobjProducto = new clsProducto();
-        DataTable ldtResponse;
+        double dblIGV = Convert.ToDouble(ConfigurationManager.AppSettings["IGV"],
+                              System.Globalization.CultureInfo.InvariantCulture);
         string[] valores = gNumDocuGenerado.Split('-');
         Double dblMontoTotalsinIGV = 0.0;
         Double dblMontoTotalIGV = 0.0;
@@ -406,8 +381,8 @@ public partial class frmGenComprobPago : System.Web.UI.Page
         String lstrRutaPDF = "";
         String lstrTicket = "";
 
-        dblMontoTotalsinIGV = Math.Round(Convert.ToDouble(txtMontoaPagar.Value) / (1 + (Convert.ToInt16(ConfigurationManager.AppSettings["IGV"]) / 100.00)), 2);
-        dblMontoTotalIGV = Math.Round(Convert.ToDouble(txtMontoaPagar.Value) - (Convert.ToDouble(txtMontoaPagar.Value) / (1+(Convert.ToInt16(ConfigurationManager.AppSettings["IGV"]) / 100.00))), 2);
+        dblMontoTotalsinIGV = Math.Round(Convert.ToDouble(txtMontoaPagar.Value) / (1 + (dblIGV / 100.0)), 2);
+        dblMontoTotalIGV = Math.Round(Convert.ToDouble(txtMontoaPagar.Value) - (Convert.ToDouble(txtMontoaPagar.Value) / (1 + (dblIGV / 100.0))), 2);
         dblMontoTotalconIGV = Math.Round(Convert.ToDouble(txtMontoaPagar.Value), 2);
 
         try
@@ -457,30 +432,27 @@ public partial class frmGenComprobPago : System.Web.UI.Page
             oCabecera.Importe_Detraccion = 0;
             oCabecera.NroCuenta_Detraccion = "";
 
-            oCabecera.Importe_Gravado = Convert.ToDecimal(dblMontoTotalsinIGV);//Convert.ToDecimal("100.00");
+            oCabecera.Importe_Gravado = Convert.ToDecimal(dblMontoTotalsinIGV);
             oCabecera.Importe_Exonerado = Convert.ToDecimal("0.00");
             oCabecera.Importe_Inafecto = Convert.ToDecimal("0.00");
             oCabecera.Importe_Gratuito = Convert.ToDecimal("0.00");
-            oCabecera.Importe_SubTotal = Convert.ToDecimal(dblMontoTotalsinIGV);//Convert.ToDecimal("100.00");
-            oCabecera.Importe_ValorVenta = Convert.ToDecimal(dblMontoTotalsinIGV); //Convert.ToDecimal("100.00");
+            oCabecera.Importe_SubTotal = Convert.ToDecimal(dblMontoTotalsinIGV);
+            oCabecera.Importe_ValorVenta = Convert.ToDecimal(dblMontoTotalsinIGV);
             oCabecera.Importe_Descuento = Convert.ToDecimal("0.00");
-            oCabecera.Importe_IGV = Convert.ToDecimal(dblMontoTotalIGV); //Convert.ToDecimal("18.00");
+            oCabecera.Importe_IGV = Convert.ToDecimal(dblMontoTotalIGV); ;
             oCabecera.Importe_ISC = Convert.ToDecimal("0.00");
-            oCabecera.Importe_Total = Convert.ToDecimal(dblMontoTotalconIGV); //Convert.ToDecimal("180.00");
-            oCabecera.Importe_Cobrado = Convert.ToDecimal(dblMontoTotalconIGV); //Convert.ToDecimal("180.00");
+            oCabecera.Importe_Total = Convert.ToDecimal(dblMontoTotalconIGV);
+            oCabecera.Importe_Cobrado = Convert.ToDecimal(dblMontoTotalconIGV);
             oCabecera.Importe_OtrosCargos = Convert.ToDecimal("0.00");
             oCabecera.Importe_OtrosTributos = Convert.ToDecimal("0.00");
-
             oCabecera.Importe_Percepcion = Convert.ToDecimal("0.00");
             oCabecera.Codigo_Percepcion = "";
             oCabecera.Porcentaje_Percepcion = Convert.ToDecimal("0.00");
             oCabecera.Base_Percepcion = Convert.ToDecimal("0.00");
-
-            oCabecera.PorcentajeIGV = 100m * (Convert.ToDecimal(ConfigurationManager.AppSettings["IGV"]) / 100m);
+            oCabecera.PorcentajeIGV = Convert.ToDecimal(dblIGV);
             oCabecera.Importe_Base_ISC = Convert.ToDecimal("0.00");
             oCabecera.Importe_Base_OtrosTributos = Convert.ToDecimal("0.00");
-
-            oCabecera.Texto_Importe_Total = NumberToText.Convertir_Valor(Convert.ToDecimal(dblMontoTotalconIGV)).ToUpper(); //"CIENTO DIECIOCHO CON (00/100) SOLES";
+            oCabecera.Texto_Importe_Total = NumberToText.Convertir_Valor(Convert.ToDecimal(dblMontoTotalconIGV)).ToUpper();
 
             #endregion
 
@@ -500,24 +472,24 @@ public partial class frmGenComprobPago : System.Web.UI.Page
 
                 dblCantidad = Math.Round(Convert.ToDouble(gdPedido.Rows[i].Cells[1].Text), 2);
                 dblPrecioUni = Math.Round(Convert.ToDouble(gdPedido.Rows[i].Cells[3].Text) / Convert.ToDouble(gdPedido.Rows[i].Cells[1].Text), 2);
-                dblPrecioUniSinIGV = Math.Round(dblPrecioUni / (1 + (Convert.ToInt16(ConfigurationManager.AppSettings["IGV"]) / 100.00)), 2);
+                dblPrecioUniSinIGV = Math.Round(dblPrecioUni / (1 + (dblIGV / 100.0)), 2);
                 dblPrecioTotal = Math.Round(Convert.ToDouble(gdPedido.Rows[i].Cells[3].Text), 2);
-                dblPrecioTotalSinIGV = Math.Round(dblPrecioTotal / (1 + (Convert.ToInt16(ConfigurationManager.AppSettings["IGV"]) / 100.00)), 2);
+                dblPrecioTotalSinIGV = Math.Round(dblPrecioTotal / (1 + (dblIGV / 100.0)), 2);
                 dblMontoIGV = Math.Round(dblPrecioTotal - dblPrecioTotalSinIGV, 2);
 
-                oDetalle.NroItem = (i + 1).ToString(); //"1";
+                oDetalle.NroItem = (i + 1).ToString();
                 oDetalle.Codigo_Articulo = gdPedido.DataKeys[i].Values[0].ToString();
                 oDetalle.Codigo_Unidad = "C62";
                 oDetalle.Descripcion_Articulo = gdPedido.Rows[i].Cells[2].Text.ToUpper();
                 oDetalle.Cantidad = Convert.ToDecimal(gdPedido.Rows[i].Cells[1].Text);
-                oDetalle.Precio_Unitario_SinIGV = Convert.ToDecimal(dblPrecioUniSinIGV); // Convert.ToDecimal("100.00");
-                oDetalle.Precio_Unitario_ConIGV = Convert.ToDecimal(dblPrecioUni); // Convert.ToDecimal("118.00");
-                oDetalle.Importe_SubTotal = Convert.ToDecimal(dblPrecioTotalSinIGV); //Convert.ToDecimal("100.00");
+                oDetalle.Precio_Unitario_SinIGV = Convert.ToDecimal(dblPrecioUniSinIGV);
+                oDetalle.Precio_Unitario_ConIGV = Convert.ToDecimal(dblPrecioUni);
+                oDetalle.Importe_SubTotal = Convert.ToDecimal(dblPrecioTotalSinIGV);
                 oDetalle.Importe_Descuento = Convert.ToDecimal("0.00");
-                oDetalle.Importe_ValorVenta = Convert.ToDecimal(dblPrecioTotalSinIGV); //Convert.ToDecimal("100.00");
-                oDetalle.Importe_IGV = Convert.ToDecimal(dblMontoIGV);// Convert.ToDecimal("18.00");
+                oDetalle.Importe_ValorVenta = Convert.ToDecimal(dblPrecioTotalSinIGV);
+                oDetalle.Importe_IGV = Convert.ToDecimal(dblMontoIGV);
                 oDetalle.Importe_ISC = Convert.ToDecimal("0.00");
-                oDetalle.Importe_Total = Convert.ToDecimal(dblPrecioTotal);// Convert.ToDecimal("118.00");
+                oDetalle.Importe_Total = Convert.ToDecimal(dblPrecioTotal);
 
                 oDetalle.EsGravado = true;
                 oDetalle.EsExonerado = false;

@@ -1493,7 +1493,6 @@ public partial class frmGenComprobPago_v2 : System.Web.UI.Page
             lstrFlagDeclara = "N";
 
         //dtResponseSerie = lobjProducto.obtenerSerieDocumento(lstrFlagDeclara, ddlComprob.SelectedValue.ToString());
-
         //gNumDocuGenerado = dtResponseSerie.Rows[0]["vchTipDocumento"].ToString();
         gNumDocuGenerado = Request.QueryString["vchNumDocu"].ToString();
         hpLog.generarLog("Serie del comprobante : gNumDocuGenerado: " + gNumDocuGenerado);
@@ -1529,15 +1528,12 @@ public partial class frmGenComprobPago_v2 : System.Web.UI.Page
                                                              //txtDireccion.Text.Trim().ToUpper());
 
                 ldtResponseActualizarSerie = lobjProducto.grabarRespuestaSUNAT(gNumDocuGenerado, gintCodRespuestaSunat, gstrDigestValue, gstrEstado, gvchMensajeRespuesta, gstrRutaCDR, gstrRutaPDF, gstrRutaXML, gstrTicket);
-                //dtResponseDocumento = lobjProducto.actualizaDocumentoReferencia(Request.QueryString["vchNumDocu"].ToString(), gNumDocuGenerado);
-                
-                
+                //dtResponseDocumento = lobjProducto.actualizaDocumentoReferencia(Request.QueryString["vchNumDocu"].ToString(), gNumDocuGenerado);                                
                 //PdfDocument lobjPdfDocument = new PdfDocument();
                 //lobjPdfDocument.LoadFromFile(gstrRutaPDF);
                 //lobjPdfDocument.PrintSettings.PrinterName = "CajaPri";
                 //lobjPdfDocument.Print();
                 //imprimirComprobante(dtResponse, "S");
-
                 Response.Redirect("frmListadoMesasPagar");
             }
             else
@@ -1556,7 +1552,6 @@ public partial class frmGenComprobPago_v2 : System.Web.UI.Page
         {
             Response.Redirect("frmListadoMesasPagar");
         }
-
     }
 
     void imprimirComprobante(DataTable dtResponse,
